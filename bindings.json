@@ -1,0 +1,21 @@
+{
+    "Alt-/": "lua:comment.comment",
+    "CtrlUnderscore": "lua:comment.comment",
+    "Ctrl-f": "CursorRight",
+    "Ctrl-b": "CursorLeft",
+    "Ctrl-n": "CursorDown",
+    "Ctrl-p": "CursorUp",
+    "Ctrl-a": "StartOfLine",
+    "Ctrl-e": "EndOfLine",
+    "Ctrl-Space": "CommandMode",
+    "Alt-;": "ShellMode",
+    "Alt-[": "PreviousTab",
+    "Alt-]": "NextTab",
+    "Alt-Backspace": "DeleteWordLeft",
+	"Alt-f": "Find",
+	"Alt-n": "FindNext",
+    "Alt-p": "FindPrevious",
+    "Alt-j": "command:fzf",
+    "Alt-v": "command:vsplit",
+    "Alt-h": "command:hsplit"
+}
