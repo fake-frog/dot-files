@@ -23,9 +23,9 @@
 
 ;;    (set-frame-font "terminus-20" nil t)
 
-(setq doom-font (font-spec :family "UW Ttyp0" :size 18 :weight 'normal :slant 'normal))
+(setq doom-font (font-spec :family "Iosevka Term" :size 16 :weight 'normal :slant 'normal))
 
-(add-to-list 'default-frame-alist '(internal-border-width . 40))
+(add-to-list 'default-frame-alist '(internal-border-width . 20))
 
 (setq-default tab-width 2
               indent-tabs-mode nil)
@@ -47,7 +47,7 @@
 ;; `load-theme' function. This is the default:
 (add-to-list 'custom-theme-load-path "~/.config/doom/themes/")
 
-(setq doom-theme 'oblong)
+(setq doom-theme 'minoblong)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -90,8 +90,12 @@
 (map! "M-n" #'+vc-gutter/stage-hunk)
 (map! "M-o" #'magit-commit-create)
 (map! "M-p" #'magit-push)
+(map! "C-<backspace>" #'delete-backward-char)
+(map! "C-u" #'undo-fu-only-undo)
+(map! "C-r" #'undo-fu-only-redo)
 
-;; To get information about any of these functions/macros, move the cursor over
+
+;; To get information about any of these fun``''ctions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
 ;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,

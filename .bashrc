@@ -129,6 +129,18 @@ export BAT_THEME="ansi"
 alias m="micro"
 alias bat="batcat"
 
+alias e="emacs -nw"
+
+function ef() {
+    local file=$(find . -type f -not -path '*/.*' | fzf --preview "cat {}")
+    [[ -n "$file" ]] && emacs -nw "$file"
+}
+
+function efa() {
+    local file=$(find . -type f | fzf --preview "cat {}")
+    [[ -n "$file" ]] && emacs -nw "$file"
+}
+
 function mf() { 
     local file=$(find . -type f -not -path '*/.*' | fzf --preview "cat {}")
     [[ -n "$file" ]] && micro "$file"
@@ -138,6 +150,7 @@ function mfa() {
     local file=$(find . -type f | fzf --preview "cat {}")
     [[ -n "$file" ]] && micro "$file"
 }
+
 
 function cf() { cd $(find . -type d -not -path '*/.*' | fzf); }
 function cfa() { cd $(find . -type d | fzf); }
@@ -190,6 +203,9 @@ source "$HOME/code/dotbackup/backup.sh"
 alias bud="backup_from_list"
 alias atb="add_to_backup_list"
 alias rfb="remove_from_backup_list"
+
+alias gpt="sgpt --temperature 1"
+alias gptc="sgpt --temperature 1 --chat"
 
 #
 # Modified by Soldier of Fortran

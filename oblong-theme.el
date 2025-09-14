@@ -27,8 +27,6 @@
 
    ;; Font lock (syntax highlighting)
    `(font-lock-comment-face ((t (:foreground ,accent))))
-   `(font-lock-comment-delimiter-face ((t (:foregrond ,accent))))
-   `(font-lock-delimiter-face ((t (:foreground ,accent))))
    `(font-lock-doc-face ((t (:foreground ,accent))))
    `(font-lock-string-face ((t (:foreground ,fg :background ,selection))))
    `(font-lock-keyword-face ((t (:foreground ,orange-alt))))
@@ -39,6 +37,7 @@
    `(font-lock-constant-face ((t (:foreground ,purple))))
    `(font-lock-warning-face ((t (:foreground ,accent))))
    `(font-lock-negation-char-face ((t (:foreground ,accent))))
+   `(button ((t (:foreground ,bg :background ,accent))))
 
    ;; Mode line
    `(mode-line ((t (:foreground ,fg :background ,selection ))))
