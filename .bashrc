@@ -44,7 +44,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -58,7 +58,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;35m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -198,6 +198,9 @@ function zq() {
     zoxide query "$@"
 }
 
+alias kbs="xset r rate 150 50 && setxkbmap -option caps:ctrl_modifier"
+alias ubt="cp -a ~/code/_unity_template/. ."
+
 source "$HOME/code/dotbackup/backup.sh"
 
 alias bud="backup_from_list"
@@ -206,25 +209,3 @@ alias rfb="remove_from_backup_list"
 
 alias gpt="sgpt --temperature 1"
 alias gptc="sgpt --temperature 1 --chat"
-
-#
-# Modified by Soldier of Fortran
-#
-# Add to you ~/.bashrc file with: 'source ~/.themes/95/bashrc'
-
-# function msdos_pwd
-# {
-#     local dir="`pwd`"
-# 
-#     echo $dir | tr '/' '//'
-# }
-# 
-# #export PS1='| \e[0;35m**\e[m `msdos_pwd` \e[0;35m**\e[m | '
-# export PS1='\e[1;35m[ ** `msdos_pwd` ** ]\e[m '
-# echo 
-# echo "===================================="
-# echo "Linux(R) Chicago 95"
-# echo "   (C)Copyleft Linux Corp 1981-1996."
-# echo "===================================="
-# echo
-

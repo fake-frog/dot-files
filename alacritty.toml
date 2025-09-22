@@ -10,7 +10,7 @@ yellow = "#bbbbbb"
 
 [colors.normal]
 black = "#000000"
-blue = "#ba4a16"
+blue = "#D77189"
 cyan = "#22998f"
 green = "#34e0c1"
 magenta = "#f752cb"
@@ -35,10 +35,15 @@ background = "#f752cb"
 text = "#000000"
 
 [font]
-size = 9
+#size=14
+size = 12
+#size = 9
 
 [font.normal]
-family = "Iosevka Term"
+#family = "Terminus"
+#family = "UW Ttyp0"
+family = "Misc Tamzen"
+#family = "Iosevka Term"
 style = "regular"
 
 [window.padding]
