@@ -44,6 +44,7 @@
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
+
 ;; `load-theme' function. This is the default:
 (add-to-list 'custom-theme-load-path "~/.config/doom/themes/")
 
@@ -139,3 +140,16 @@
 
 
 (setq-default left-margin-width 1)
+
+
+;; allways zen
+(add-hook! 'doom-first-buffer-hook #'+zen/toggle)
+
+(after! writeroom-mode
+  (defun my/enable-zen ()
+    (unless writeroom-mode
+      (+zen/toggle)))
+
+  (add-hook! '(doom-switch-buffer-hook
+               doom-first-buffer-hook)
+             #'my/enable-zen))

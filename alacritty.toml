@@ -35,9 +35,9 @@ background = "#f752cb"
 text = "#000000"
 
 [font]
-#size=14
-size = 12
-#size = 9
+size=13
+#size = 12
+#size = 10
 
 [font.normal]
 #family = "Terminus"

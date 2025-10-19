@@ -184,19 +184,21 @@ eval "$(zoxide init bash)"
 alias za='zoxide add'                   # Manually add current directory
 alias zr='zoxide remove'                # Remove directory from database
 
-function z() {
-    local dir=$(zoxide query "$@")
-    [[ -n "$dir" ]] && cd "$dir"
-}
+eval "$(zoxide init bash)"
 
-function zi() {
-    local dir=$(zoxide query --interactive "$@")
-    [[ -n "$dir" ]] && cd "$dir"
-}
+# function z() {
+#     local dir=$(zoxide query "$@")
+#     [[ -n "$dir" ]] && cd "$dir"
+# }
 
-function zq() {
-    zoxide query "$@"
-}
+# function zi() {
+#     local dir=$(zoxide query --interactive "$@")
+#     [[ -n "$dir" ]] && cd "$dir"
+# }
+
+# function zq() {
+#     zoxide query "$@"
+# }
 
 alias kbs="xset r rate 150 50 && setxkbmap -option caps:ctrl_modifier"
 alias ubt="cp -a ~/code/_unity_template/. ."
@@ -209,3 +211,5 @@ alias rfb="remove_from_backup_list"
 
 alias gpt="sgpt --temperature 1"
 alias gptc="sgpt --temperature 1 --chat"
+
+alias x41pkg='sudo docker run -it --rm --platform linux/386 -v ~/x41-debs:/debs debian:12'
