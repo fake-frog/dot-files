@@ -1,0 +1,16 @@
+alacritty
+build-essential
+clang-format
+emacs
+fastfetch
+feh
+firefox-esr
+gdb
+git
+htop
+i3
+keychain
+tree
+xorg
+zile
+zoxide

@@ -1,24 +1,20 @@
-(deftheme minoblong "MINIMAL --MISS-SHAPPEN AND CYBERPUNK")
+(deftheme oblong "MISS-SHAPPEN AND CYBERPUNK")
 
 ;; Color palette - customize these
 (let ((bg       "#000000")    ; XTerm background
-      (fg       "#7c7c7c")    ; XTerm foreground
+      (fg       "#aaaaaa")    ; XTerm foreground
       (bg-alt   "#111111")    ; XTerm color8/color2
       (fg-alt   "#666666")    ; XTerm color1
-      (accent   "#D77189")    ; XTerm bright cyan
-      (light-grey   "#999999")    ; XTerm color11
-      (green    "#999999")    ; XTerm color6 (teal)
-      (cyan     "#aaaaaa")    ; XTerm bright cyan
+      (accent   "#ba4a16")    ; XTerm bright cyan
+      (light-grey   "#bbbbbb")    ; XTerm color11
+      (green    "#22998f")    ; XTerm color6 (teal)
+      (cyan     "#34e0c1")    ; XTerm bright cyan
       (purple   "#f752cb")    ; XTerm magenta
       (selection "#222222")
-      (orange-alt "#aaaaaa")
-      (comment-fg "#D77189")
-      (diff-change-fg "#0000CD")
-      (diff-change-bg "#13154c")
-      ) 
+      (orange-alt "salmon"))  ; XTerm highlight background
 
   (custom-theme-set-faces
-   'minoblong
+   'oblong
 
    ;; Base faces
    `(default ((t (:foreground ,fg :background ,bg))))
@@ -30,22 +26,18 @@
    `(vertical-border ((t (:foreground ,bg-alt))))
 
    ;; Font lock (syntax highlighting)
-   `(font-lock-comment-face ((t (:foreground ,comment-fg))))
+   `(font-lock-comment-face ((t (:foreground ,accent))))
    `(font-lock-doc-face ((t (:foreground ,accent))))
-   `(font-lock-string-face ((t (:foreground ,orange-alt :background ,selection))))
-   `(font-lock-keyword-face ((t (:foreground ,purple))))
-   `(font-lock-builtin-face ((t (:foreground ,fg))))
-   `(font-lock-function-name-face ((t (:foreground ,cyan))))
-   `(font-lock-variable-name-face ((t (:foreground ,cyan))))
+   `(font-lock-string-face ((t (:foreground ,fg :background ,selection))))
+   `(font-lock-keyword-face ((t (:foreground ,orange-alt))))
+   `(font-lock-builtin-face ((t (:foreground ,green))))
+   `(font-lock-function-name-face ((t (:foreground ,purple))))
+   `(font-lock-variable-name-face ((t (:foreground ,purple))))
    `(font-lock-type-face ((t (:foreground ,cyan))))
-   `(font-lock-constant-face ((t (:foreground ,cyan))))
-   `(font-lock-warning-face ((t (:foreground ,comment-fg))))
-   `(font-lock-negation-char-face ((t (:foreground ,purple))))
-   `(font-lock-operator-face ((t (:foreground ,purple))))
-   `(font-lock-punctuation-face ((t (:foreground ,purple))))
-   `(font-lock-preprocessor-face ((t (:foreground ,purple))))
-   `(button ((t (:foreground ,orange-alt :background ,selection))))
-
+   `(font-lock-constant-face ((t (:foreground ,purple))))
+   `(font-lock-warning-face ((t (:foreground ,accent))))
+   `(font-lock-negation-char-face ((t (:foreground ,accent))))
+   `(button ((t (:foreground ,bg :background ,accent))))
 
    ;; Mode line
    `(mode-line ((t (:foreground ,fg :background ,selection ))))
@@ -77,7 +69,7 @@
    ;; Diagnostic severity levels
    `(lsp-lsp-flycheck-error-unnecessary-face ((t (:foreground ,selection :underline nil))))
    `(lsp-lsp-flycheck-warning-unnecessary-face ((t (:foreground ,selection :underline nil))))
-
+   
    ;; LSP UI faces (if using lsp-ui)
    `(lsp-ui-doc-background ((t (:background ,selection))))
    `(lsp-ui-doc-header ((t (:foreground ,selection))))
@@ -127,7 +119,6 @@
    `(magit-diff-added ((t (:foreground ,green :background ,(concat green "20")))))
    `(magit-diff-removed ((t (:foreground ,accent :background ,(concat accent "20")))))
    `(magit-diff-context ((t (:foreground ,fg-alt))))
-   `(diff-hl-margin-change ((t (:foreground ,diff-change-fg :background ,diff-change-bg))))
 
    ;; Which-key
    `(which-key-key-face ((t (:foreground ,accent :weight bold))))
@@ -153,6 +144,6 @@
 
 
 
-(provide-theme 'minoblong)
+(provide-theme 'oblong)
 
 ;;; oblong-theme.el ends here

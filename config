@@ -11,10 +11,9 @@
 
 set $mod Mod4
 
-exec --no-startup-id feh --bg-fill ~/Pictures/lain.jpeg
+exec --no-startup-id feh --bg-fill ~/Pictures/flower-wall.jpg
 exec --no-startup-id xset r rate 175 50
-exec --no-startup-id setxkbmap -option caps:ctrl_modifier
-exec --no-startup-id xmodmap -e "keycode 67 = Escape"
+exec --no-startup-id setxkbmap -option altwin:swap_alt_win,caps:ctrl_modifier
 exec_always --no-startup-id xinput set-prop 11 "libinput Accel Speed" -0.5
 exec_always --no-startup-id xinput set-prop 11 "libinput Accel Profile Enabled" 1
 
@@ -22,11 +21,11 @@ bindsym $mod+l exec i3lock -c 000000
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:terminus 9
+#font pango:terminus 9
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 10 
+font pango:Jetbrains Mono 14
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -203,16 +202,21 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 default_border pixel 1
 default_floating_border pixel 1
 
-set $bg-color            #000000
+gaps outer 10
+gaps inner 20
+
+set $bg-color            #1c1c1c
 set $inactive-bg-color   #000000
-set $text-color          #f3f4f5
+set $text-color          #f3f4f5a
 set $inactive-text-color #676e7d
 set $urgent-bg-color     #e53e3e
-set $indicator-color     #1b1b1b
-#set $focused-border      #f752c
-set $focused-border      #1b1b1b
-set $unfocused-border    #000000
-set $orange-color        #D77189
+set $indicator-color     #f752c0
+#set $focused-border      #f752cb
+set $focused-border      #555555
+#set $focused-border      #e35420
+set $unfocused-border    #333333
+set $orange-color        #f752c0
+#set $orange-color        #555555
 
 client.focused          $focused-border     $bg-color          $text-color          $indicator-color   $focused-border
 client.focused_inactive $unfocused-border   $inactive-bg-color $inactive-text-color $unfocused-border  $unfocused-border
@@ -222,13 +226,13 @@ client.placeholder      $bg-color           $bg-color          $text-color      
 client.background       $bg-color
 
 bar {
-    position bottom
-	status_command i3status --config ~/.config/i3/i3status.conf
+    position top
+    status_command i3status --config ~/.config/i3/i3status.conf
     
     # Bar appearance
-    padding 5px 10px 0px 0px
+    padding 5px 30px 0px 30px
     height 24
-    separator_symbol " *-* "
+    separator_symbol " | "
     workspace_buttons yes
     strip_workspace_numbers yes
    

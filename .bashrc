@@ -1,5 +1,4 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -58,7 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;35m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -112,104 +111,13 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PATH=$HOME/.local/bin:$PATH
 
-export PATH="$HOME/.config/emacs/bin:$PATH"
+# start i3
+if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
+    exec startx
+fi
 
-#keychain
-
-eval `keychain --eval id_ed25519`
-
-# find . | fzf
-# export FZF_DEFAULT_COMMAND='micro $(find .)'
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#aaaaaa,bg:#000000,hl:#aaaaaa --color=fg+:#ba4a16,bg+:#000000,hl+:#ba4a16 --color=info:#ba4a16,prompt:#ba4a16,pointer:#ba4a16 --color=marker:#ba4a16,spinner:#ba4a16,header:#f752cb'
-
-export BAT_THEME="ansi"
-
-alias m="micro"
-alias bat="batcat"
+eval $(keychain --eval --quiet id_github)
+eval "$(zoxide init bash)"
 
 alias e="emacs -nw"
-
-function ef() {
-    local file=$(find . -type f -not -path '*/.*' | fzf --preview "cat {}")
-    [[ -n "$file" ]] && emacs -nw "$file"
-}
-
-function efa() {
-    local file=$(find . -type f | fzf --preview "cat {}")
-    [[ -n "$file" ]] && emacs -nw "$file"
-}
-
-function mf() { 
-    local file=$(find . -type f -not -path '*/.*' | fzf --preview "cat {}")
-    [[ -n "$file" ]] && micro "$file"
-}
-
-function mfa() { 
-    local file=$(find . -type f | fzf --preview "cat {}")
-    [[ -n "$file" ]] && micro "$file"
-}
-
-
-function cf() { cd $(find . -type d -not -path '*/.*' | fzf); }
-function cfa() { cd $(find . -type d | fzf); }
-
-function fat() { 
-	local file=$(find . -type f -not -path '*/.*' | fzf)
-	[[ -n "$file" ]] && batcat "$file"
-}
-
-function fatt() { 
-	local file=$(find . -type f | fzf)
-	[[ -n "$file" ]] && batcat "$file"
-}
-
-. "$HOME/.cargo/env"
-export PATH="$HOME/.local/bin:$PATH"
-
-# Emulate an MS-DOS prompt in your Linux shell.
-# Laszlo Szathmary (jabba.laci@gmail.com), 2011
-# Project home page:
-# https://ubuntuincident.wordpress.com/2011/02/08/emulate-the-ms-dos-prompt/
-## Zoxide configuration
-export _ZO_ECHO=1
-export _ZO_RESOLVE_SYMLINKS=1
-export _ZO_EXCLUDE_DIRS="$HOME/.cache:$HOME/.git"
-
-# Initialize zoxide - creates the main 'z' command
-eval "$(zoxide init bash)"
-
-# Aliases that accept arguments
-alias za='zoxide add'                   # Manually add current directory
-alias zr='zoxide remove'                # Remove directory from database
-
-eval "$(zoxide init bash)"
-
-# function z() {
-#     local dir=$(zoxide query "$@")
-#     [[ -n "$dir" ]] && cd "$dir"
-# }
-
-# function zi() {
-#     local dir=$(zoxide query --interactive "$@")
-#     [[ -n "$dir" ]] && cd "$dir"
-# }
-
-# function zq() {
-#     zoxide query "$@"
-# }
-
-alias kbs="xset r rate 150 50 && setxkbmap -option caps:ctrl_modifier"
-alias ubt="cp -a ~/code/_unity_template/. ."
-
-source "$HOME/code/dotbackup/backup.sh"
-
-alias bud="backup_from_list"
-alias atb="add_to_backup_list"
-alias rfb="remove_from_backup_list"
-
-alias gpt="sgpt --temperature 1"
-alias gptc="sgpt --temperature 1 --chat"
-
-alias x41pkg='sudo docker run -it --rm --platform linux/386 -v ~/x41-debs:/debs debian:12'

@@ -1,21 +1,21 @@
 (deftheme minoblong "MINIMAL --MISS-SHAPPEN AND CYBERPUNK")
 
 ;; Color palette - customize these
-(let ((bg       "#000000")    ; XTerm background
+(let ((bg       "#111111")    ; XTerm background
       (fg       "#7c7c7c")    ; XTerm foreground
-      (bg-alt   "#111111")    ; XTerm color8/color2
+      (bg-alt   "#1c1c1c")    ; XTerm color8/color2
       (fg-alt   "#666666")    ; XTerm color1
-      (accent   "#D77189")    ; XTerm bright cyan
+      (accent   "#e35420")    ; XTerm bright cyan
       (light-grey   "#999999")    ; XTerm color11
-      (green    "#999999")    ; XTerm color6 (teal)
+      (green    "#777777")    ; XTerm color6 (teal)
       (cyan     "#aaaaaa")    ; XTerm bright cyan
-      (purple   "#f752cb")    ; XTerm magenta
+      (purple   "#f752c0")
       (selection "#222222")
       (orange-alt "#aaaaaa")
-      (comment-fg "#D77189")
+      (comment-fg "#444444")
       (diff-change-fg "#0000CD")
       (diff-change-bg "#13154c")
-      ) 
+      )  ; XTerm highligpp``''ht background
 
   (custom-theme-set-faces
    'minoblong
@@ -27,7 +27,7 @@
    `(highlight ((t (:background ,selection))))
    `(hl-line ((t (:background ,bg-alt))))
    `(fringe ((t (:background ,bg :foreground ,fg-alt))))
-   `(vertical-border ((t (:foreground ,bg-alt))))
+   `(vertical-border ((t (:foreground ,comment-fg))))
 
    ;; Font lock (syntax highlighting)
    `(font-lock-comment-face ((t (:foreground ,comment-fg))))
@@ -56,7 +56,9 @@
    `(minibuffer-prompt ((t (:foreground ,accent :weight bold))))
 
    ;; Search
-   `(isearch ((t (:foreground ,bg :background ,light-grey :weight bold))))
+   `(isearch ((t (:foreground ,fg :background ,selection :weight bold))))
+   `(match ((t (:background ,selection :foreground ,fg))))
+   `(completions-common-part ((t (:background ,selection :foreground ,fg))))
    `(lazy-highlight ((t (:foreground ,fg :background ,bg-alt :underline t))))
 
    ;; Line numbers
@@ -137,7 +139,10 @@
    ;; Helm/Ivy
    `(helm-selection ((t (:background ,selection))))
    `(ivy-current-match ((t (:background ,selection :weight bold))))
-   `(ivy-minibuffer-match-face-1 ((t (:foreground ,accent))))
+   `(ivy-minibuffer-match-highlight ((t (:background ,selection ))))
+   `(ivy-minibuffer-match-1 ((t (:background ,selection ))))
+   `(ivy-minibuffer-match-face-1 ((t (:background ,selection ))))
+   `(ivy-minibuffer-match-face-2 ((t (:background ,selection))))
 
    ;; In your deftheme faces list
    `(vterm-color-black ((t ( :foreground ,bg :background ,bg))))
@@ -148,10 +153,7 @@
    `(vterm-color-magenta ((t ( :foreground ,purple :background ,purple))))
    `(vterm-color-cyan ((t ( :foreground ,cyan :background ,cyan))))
    `(vterm-color-white ((t( :foreground ,fg :background ,fg))))
-
    ))
-
-
 
 (provide-theme 'minoblong)
 

@@ -1,25 +1,25 @@
 [colors.bright]
 black = "#333333"
 blue = "#cccccc"
-cyan = "#34e0c1"
-green = "#34e0c1"
-magenta = "#f752cb"
+cyan = "#aaaaaa"
+green = "#aaaaaa"
+magenta = "#f752c0"
 red = "#888888"
 white = "#ffffff"
 yellow = "#bbbbbb"
 
 [colors.normal]
-black = "#000000"
-blue = "#D77189"
-cyan = "#22998f"
-green = "#34e0c1"
-magenta = "#f752cb"
+black = "#111111"
+blue = "#e35420"
+cyan = "#aaaaaa"
+green = "#f752c0"
+magenta = "#f752c0"
 red = "#666666"
 white = "#ffffff"
 yellow = "#aaaaaa"
 
 [colors.primary]
-background = "#000000"
+background = "#111111"
 foreground = "#aaaaaa"
 
 [colors.search.focused_match]
@@ -35,17 +35,14 @@ background = "#f752cb"
 text = "#000000"
 
 [font]
-size=13
+size=7
 #size = 12
 #size = 10
 
 [font.normal]
-#family = "Terminus"
-#family = "UW Ttyp0"
-family = "Misc Tamzen"
-#family = "Iosevka Term"
+family = "Jetbrains Mono"
 style = "regular"
 
 [window.padding]
-x = 20
-y = 20
+x = 15
+y = 15
