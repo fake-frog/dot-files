@@ -12,11 +12,15 @@
 (global-set-key (kbd "M-s") 'isearch-backward)
 (global-set-key (kbd "M-n") 'forward-paragraph)
 (global-set-key (kbd "M-p") 'backward-paragraph)
-
+(setq-default truncate-lines t)
+(setq scroll-conservatively 101)
 (electric-pair-mode 1)
-
-(add-to-list 'custom-theme-load-path "~/oblong-theme")
-(load-theme 'minoblong t)
+(global-display-line-numbers-mode 1)
+(add-to-list 'custom-theme-load-path "~/min-oblong-theme")
+(add-to-list 'custom-theme-load-path "~/min-moss-theme")
+(add-to-list 'custom-theme-load-path "~/min-oblique-theme")
+(add-to-list 'custom-theme-load-path "~/min-bling-theme")
+(load-theme 'min-bling t)
 
 ;; Package setup
 (require 'package)
@@ -36,6 +40,13 @@
   (package-install 'clang-format))
 (unless (package-installed-p 'multiple-cursors)
   (package-install 'multiple-cursors))
+(unless (package-installed-p 'magit)
+  (package-install 'magit))
+(unless (package-installed-p 'bdiff-hl)
+ (package-install 'diff-hl))
+
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-diff-hl-mode 1)
 
 ;; Format on save for C/C++ modes
 (add-hook 'c-mode-hook
@@ -61,10 +72,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(avy clang-format company multiple-cursors swiper)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'downcase-region 'disabled nil)
