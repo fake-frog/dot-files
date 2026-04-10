@@ -1,0 +1,20 @@
+# TTY Colors (matches Alacritty theme)
+if [ "$TERM" = "linux" ]; then
+    echo -en "\e]P03a3333" # black
+    echo -en "\e]P1f66151" # red
+    echo -en "\e]P2dc8add" # green
+    echo -en "\e]P3f666aa" # yellow
+    echo -en "\e]P4f66151" # blue
+    echo -en "\e]P5f666aa" # magenta
+    echo -en "\e]P6dababa" # cyan
+    echo -en "\e]P7bc8c8c" # white
+    echo -en "\e]P82e2e2e" # bright black
+    echo -en "\e]P9f66151" # bright red
+    echo -en "\e]PAdc8add" # bright green
+    echo -en "\e]PBf666aa" # bright yellow
+    echo -en "\e]PCdc8add" # bright blue
+    echo -en "\e]PDf666aa" # bright magenta
+    echo -en "\e]PEdababa" # bright cyan
+    echo -en "\e]PFdababa" # bright white
+    clear # clear artifacts from color escape codes
+fi
