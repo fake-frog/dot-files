@@ -3,7 +3,6 @@
 (scroll-bar-mode -1)
 (setq inhibit-startup-message t)
 (set-fringe-mode 10)
-
 (global-set-key (kbd "C-d") 'delete-backward-char)
 (with-eval-after-load 'cc-mode
   (define-key c-mode-base-map (kbd "C-d") 'delete-backward-char))
@@ -16,10 +15,8 @@
 (setq scroll-conservatively 101)
 (electric-pair-mode 1)
 (global-display-line-numbers-mode 1)
-(add-to-list 'custom-theme-load-path "~/min-oblong-theme")
-(add-to-list 'custom-theme-load-path "~/min-moss-theme")
-(add-to-list 'custom-theme-load-path "~/min-oblique-theme")
-(add-to-list 'custom-theme-load-path "~/min-bling-theme")
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
+(add-to-list 'custom-theme-load-path "~/system-themes/min-bling")
 (load-theme 'min-bling t)
 
 ;; Package setup
@@ -27,43 +24,56 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-(unless (package-installed-p 'swiper)
-  (package-refresh-contents)
-  (package-install 'swiper))
-(unless (package-installed-p 'avy)
-  (package-install 'avy))
-(unless (package-installed-p 'company)
-  (package-install 'company))
-(unless (package-installed-p 'ivy)
-  (package-install 'ivy))
-(unless (package-installed-p 'clang-format)
-  (package-install 'clang-format))
-(unless (package-installed-p 'multiple-cursors)
-  (package-install 'multiple-cursors))
-(unless (package-installed-p 'magit)
-  (package-install 'magit))
-(unless (package-installed-p 'bdiff-hl)
- (package-install 'diff-hl))
+(dolist (pkg '(swiper avy ivy clang-format multiple-cursors magit diff-hl 
+               corfu corfu-terminal orderless cape))
+  (unless (package-installed-p pkg)
+    (package-refresh-contents)
+    (package-install pkg)))
 
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-diff-hl-mode 1)
 
-;; Format on save for C/C++ modes
+;; Format on save for C/C++
 (add-hook 'c-mode-hook
           (lambda () (add-hook 'before-save-hook 'clang-format-buffer nil 'local)))
 (add-hook 'c++-mode-hook
           (lambda () (add-hook 'before-save-hook 'clang-format-buffer nil 'local)))
 
+;; Ivy / Swiper
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
-
-;; Enable completion
-(add-hook 'after-init-hook 'global-company-mode)
-
-;; Keybindings
 (global-set-key (kbd "C-s") 'swiper)
-(global-set-key (kbd "C-i") 'avy-goto-char-timer)
 
+;; Orderless completion style
+(require 'orderless)
+(setq completion-styles '(orderless basic)
+      completion-category-overrides '((file (styles basic partial-completion))))
+
+;; Corfu (in-buffer popup completion)
+(unless (display-graphic-p)
+  (require 'corfu-terminal)
+  (corfu-terminal-mode +1))
+
+(require 'corfu)
+(setq corfu-auto t
+      corfu-auto-delay 0.0
+      corfu-auto-prefix 1
+      corfu-quit-no-input t)
+(global-corfu-mode 1)
+
+;; Cape (extra completion sources)
+(require 'cape)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (add-to-list 'completion-at-point-functions #'cape-file)
+            (add-to-list 'completion-at-point-functions #'cape-dabbrev)))
+
+;; Eglot (LSP) for C
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+
+;; Avy / multiple-cursors
+(global-set-key (kbd "C-i") 'avy-goto-char-timer)
 (require 'multiple-cursors)
 (global-set-key (kbd "M-;") 'mc/mark-next-like-this)
 
@@ -72,7 +82,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(avy cape clang-format company corfu corfu-terminal diff-hl magit
+	 multiple-cursors orderless swiper)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
