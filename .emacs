@@ -16,7 +16,10 @@
 (electric-pair-mode 1)
 (global-display-line-numbers-mode 1)
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
+(setq auto-save-file-name-transforms
+      `((".*" "~/.emacs.d/backups/" t)))
 (add-to-list 'custom-theme-load-path "~/system-themes/min-bling")
+(add-to-list 'custom-theme-load-path "~/cloudy-theme")
 (load-theme 'min-bling t)
 
 ;; Package setup
@@ -25,13 +28,15 @@
 (package-initialize)
 
 (dolist (pkg '(swiper avy ivy clang-format multiple-cursors magit diff-hl 
-               corfu corfu-terminal orderless cape))
+               corfu corfu-terminal orderless cape indent-guide))
   (unless (package-installed-p pkg)
     (package-refresh-contents)
     (package-install pkg)))
 
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-diff-hl-mode 1)
+
+(indent-guide-global-mode 1)
 
 ;; Format on save for C/C++
 (add-hook 'c-mode-hook
@@ -45,6 +50,7 @@
 (global-set-key (kbd "C-s") 'swiper)
 
 ;; Orderless completion style
+
 (require 'orderless)
 (setq completion-styles '(orderless basic)
       completion-category-overrides '((file (styles basic partial-completion))))
@@ -55,9 +61,10 @@
   (corfu-terminal-mode +1))
 
 (require 'corfu)
+
 (setq corfu-auto t
-      corfu-auto-delay 0.0
-      corfu-auto-prefix 1
+      corfu-auto-delay 0.2
+      corfu-auto-prefix 2
       corfu-quit-no-input t)
 (global-corfu-mode 1)
 
@@ -83,8 +90,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(avy cape clang-format company corfu corfu-terminal diff-hl magit
-	 multiple-cursors orderless swiper)))
+   '(avy cape clang-format company corfu corfu-terminal diff-hl
+	 hl-indent-scope indent-guide magit multiple-cursors orderless
+	 swiper)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
