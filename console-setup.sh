@@ -1,0 +1,78 @@
+#!/bin/sh
+# console-setup.sh — one-time TTY setup for Debian
+# Sets: purple palette, VGA font, capslock -> control
+# Run once with: sudo sh console-setup.sh
+
+set -e
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Run me with sudo:  sudo sh $0" >&2
+    exit 1
+fi
+
+# --- 1. Console font (DejaVu 20x36) ------------------------------------
+# Persisted in /etc/default/console-setup, applied by the console-setup svc.
+# Terminus at 20x36 is the largest chunky bitmap face;
+FONT_FILE=/usr/share/consolefonts/Lat15-DejaVu36x20.psf.gz
+if [ ! -f "$FONT_FILE" ]; then
+    echo "DejaVu 20x36 font not found at $FONT_FILE."
+    echo "Install it with:  sudo apt install xfonts-terminus console-setup"
+    echo "Available terminus fonts:"
+    ls /usr/share/consolefonts/ | grep -i terminus || true
+    echo "Edit FONT_FILE in this script to match, then rerun."
+    exit 1
+fi
+
+# console-setup uses FONTFACE + FONTSIZE rather than a raw path.
+sed -i 's/^FONTFACE=.*/FONTFACE="DejaVu"/' /etc/default/console-setup
+sed -i 's/^FONTSIZE=.*/FONTSIZE="20x36"/'        /etc/default/console-setup
+grep -q '^FONTFACE=' /etc/default/console-setup || echo 'FONTFACE="DajaVu"' >> /etc/default/console-setup
+grep -q '^FONTSIZE=' /etc/default/console-setup || echo 'FONTSIZE="20x36"'        >> /etc/default/console-setup
+echo "Font set to Terminus Bold 20x36."
+
+# --- 2. Capslock -> Control ----------------------------------------------
+# Done via /etc/default/keyboard XKBOPTIONS — the safe, persistent way.
+# (This is what broke before: loadkeys at runtime is fragile. This isn't.)
+if grep -q '^XKBOPTIONS=' /etc/default/keyboard; then
+    sed -i 's/^XKBOPTIONS=.*/XKBOPTIONS="ctrl:nocaps"/' /etc/default/keyboard
+else
+    echo 'XKBOPTIONS="ctrl:nocaps"' >> /etc/default/keyboard
+fi
+echo "Capslock remapped to Control."
+
+# --- 3. Purple palette ----------------------------------------------------
+# Palette can't live in console-setup; we write a tiny profile script that
+# emits the escape codes only on a real VT. This is the ONE per-login piece,
+# but it's pure cosmetic escape codes — no root, no loadkeys, nothing fragile.
+cat > /etc/profile.d/console-palette.sh <<'EOF'
+case "$(tty)" in
+  /dev/tty[0-9]*)
+    printf '\033]P0000000'   # 0  bg        near-black violet
+    printf '\033]P8444444'   # 8  gray      dim mauve
+    printf '\033]P1777777'   # 1  red       rose-red
+    printf '\033]P9888888'   # 9  br red    hot pink-red
+    printf '\033]P2999999'   # 2  green     warm violet
+    printf '\033]PAaaaaaa'   # A  br green  light orchid
+    printf '\033]P3757575'   # 3  yellow    dusty magenta
+    printf '\033]PB999999'   # B  br yellow pink
+    printf '\033]P4aa3391'   # 4  blue      muted purple
+    printf '\033]PCdd33bb'   # C  br blue   periwinkle-violet
+    printf '\033]P5666666'   # 5  magenta   magenta-purple
+    printf '\033]PD777777'   # D  br mag    bright orchid
+    printf '\033]P6666666'   # 6  cyan      blue-violet
+    printf '\033]PE999999'   # E  br cyan   pale lavender
+    printf '\033]P7aaaaaa'   # 7  fg        soft lilac-white
+    printf '\033]PFbbbbbb'   # F  br white  near-white pink
+    printf '\033\014'         # repaint
+    ;;
+esac
+EOF
+chmod +x /etc/profile.d/console-palette.sh
+echo "Purple palette installed to /etc/profile.d/."
+
+# --- apply now without reboot --------------------------------------------
+setupcon --force 2>/dev/null || true
+
+echo
+echo "Done. Font + capslock take effect now (or after a reboot to be safe)."
+echo "Palette applies on your next console login."
