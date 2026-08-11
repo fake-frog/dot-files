@@ -1,0 +1,97 @@
+/* ~/.config/waybar/style.css
+ * Nano Emacs style: one accent color, no icons, no borders/shadows,
+ * separation via off-white blocks and generous spacing.
+ */
+
+* {
+    font-family: "lilex", "FontAwesome", monospace;
+    font-style: italic;
+    font-size: 14px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    background-color: transparent;
+    color: #696262;   /* foreground — hard reset, no GTK theme colors leak through */
+}
+
+window#waybar {
+    background: #111111;  /* off-white, like nano's modeline strip */
+    color: #696262;
+}
+
+/* every module gets breathing room instead of a divider */
+#workspaces,
+#mode,
+#clock,
+#pulseaudio,
+#network,
+#battery,
+#tray {
+    margin: 5px 5px;
+    padding: 0 4px;
+    background-color: transparent;
+    color: #696262;
+}
+
+/* ── Workspaces ─────────────────────────────────────────────────────── */
+#workspaces button {
+    padding: 0px 5px;
+    margin-right: 5px;
+    background-color: #1f1d1d;
+
+}
+
+/* current workspace: white block on the off-white bar — inverted from
+   before, since the bar itself is now the off-white surface */
+#workspaces button.focused {
+    background-color:  #3a3333;
+    color:  #53997b;
+}
+
+#workspaces button.urgent {
+    color: #1f1d1d;
+    background-color: #f66151;
+}
+
+/* ── Mode (resize etc.) — the one place a strong accent is earned ──── */
+#mode {
+    background-color: #111111;
+    color: #dc8add;   /* salient */
+}
+
+/* ── Everything else: plain text, quiet by default ──────────────────── */
+#clock {
+    color: #696262;
+}
+
+#battery {
+    color: #696262;
+}
+
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#tray {
+    color: #696262;   /* quieter than foreground — secondary info */
+}
+
+#battery.warning {
+    color: #f66151;   /* popout */
+}
+
+#battery.critical {
+    color: #f66151;   /* critical */
+}
+
+#network.disconnected {
+    color: #f66151;
+}
+
+#pulseaudio.muted {
+    color: #3a3333;
+}
+
+#tray {
+    margin-right: 8px;
+}

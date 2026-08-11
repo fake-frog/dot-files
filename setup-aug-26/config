@@ -1,0 +1,60 @@
+// ~/.config/waybar/config
+{
+    "layer": "top",
+    "position": "bottom",
+    "height": 36,
+    "spacing": 0,
+
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio", "network", "memory", "cpu","battery", "tray"],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{name}"
+    },
+
+    "sway/mode": {
+        "format": "  {}  "
+    },
+
+    "clock": {
+        "format": "{:%I:%M  %a %d %b}",
+        "tooltip-format": "{:%Y-%m-%d}"
+    },
+
+    "pulseaudio": {
+        "format": "vol {volume}%",
+        "format-muted": "muted",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%)",
+        "format-ethernet": "eth",
+        "format-disconnected": "disconnected",
+        "tooltip-format": "{ifname} via {gwaddr}"
+    },
+
+    "memory": {
+         "format": "mem: {percentage}% "
+    },
+    
+    "cpu": {
+         "format": "cpu: {usage}%"
+    },
+
+    "battery": {
+        "format": "bat: {icon}{capacity}%",
+        "format-charging": "bat: {capacity}% chr",
+        "states": {
+            "warning": 25,
+            "critical": 10
+        }
+    },
+
+    "tray": {
+        "spacing": 8
+    }
+}

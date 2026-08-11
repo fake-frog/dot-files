@@ -13,9 +13,9 @@ fi
 # --- 1. Console font (DejaVu 20x36) ------------------------------------
 # Persisted in /etc/default/console-setup, applied by the console-setup svc.
 # Terminus at 20x36 is the largest chunky bitmap face;
-FONT_FILE=/usr/share/consolefonts/Lat15-DejaVu36x20.psf.gz
+FONT_FILE=/usr/share/consolefonts/Lat15-VGA32x16.psf.gz
 if [ ! -f "$FONT_FILE" ]; then
-    echo "DejaVu 20x36 font not found at $FONT_FILE."
+    echo "VGA 16x32 font not found at $FONT_FILE."
     echo "Install it with:  sudo apt install xfonts-terminus console-setup"
     echo "Available terminus fonts:"
     ls /usr/share/consolefonts/ | grep -i terminus || true
@@ -24,11 +24,11 @@ if [ ! -f "$FONT_FILE" ]; then
 fi
 
 # console-setup uses FONTFACE + FONTSIZE rather than a raw path.
-sed -i 's/^FONTFACE=.*/FONTFACE="DejaVu"/' /etc/default/console-setup
-sed -i 's/^FONTSIZE=.*/FONTSIZE="20x36"/'        /etc/default/console-setup
-grep -q '^FONTFACE=' /etc/default/console-setup || echo 'FONTFACE="DajaVu"' >> /etc/default/console-setup
-grep -q '^FONTSIZE=' /etc/default/console-setup || echo 'FONTSIZE="20x36"'        >> /etc/default/console-setup
-echo "Font set to Terminus Bold 20x36."
+sed -i 's/^FONTFACE=.*/FONTFACE="VGA"/' /etc/default/console-setup
+sed -i 's/^FONTSIZE=.*/FONTSIZE="16x32"/'        /etc/default/console-setup
+grep -q '^FONTFACE=' /etc/default/console-setup || echo 'FONTFACE="VGA"' >> /etc/default/console-setup
+grep -q '^FONTSIZE=' /etc/default/console-setup || echo 'FONTSIZE="16x32"'        >> /etc/default/console-setup
+echo "Font set to VGA 16x32."
 
 # --- 2. Capslock -> Control ----------------------------------------------
 # Done via /etc/default/keyboard XKBOPTIONS — the safe, persistent way.
@@ -47,22 +47,22 @@ echo "Capslock remapped to Control."
 cat > /etc/profile.d/console-palette.sh <<'EOF'
 case "$(tty)" in
   /dev/tty[0-9]*)
-    printf '\033]P0000000'   # 0  bg        near-black violet
-    printf '\033]P8444444'   # 8  gray      dim mauve
-    printf '\033]P1777777'   # 1  red       rose-red
-    printf '\033]P9888888'   # 9  br red    hot pink-red
-    printf '\033]P2999999'   # 2  green     warm violet
-    printf '\033]PAaaaaaa'   # A  br green  light orchid
-    printf '\033]P3757575'   # 3  yellow    dusty magenta
-    printf '\033]PB999999'   # B  br yellow pink
-    printf '\033]P4aa3391'   # 4  blue      muted purple
-    printf '\033]PCdd33bb'   # C  br blue   periwinkle-violet
-    printf '\033]P5666666'   # 5  magenta   magenta-purple
-    printf '\033]PD777777'   # D  br mag    bright orchid
-    printf '\033]P6666666'   # 6  cyan      blue-violet
-    printf '\033]PE999999'   # E  br cyan   pale lavender
-    printf '\033]P7aaaaaa'   # 7  fg        soft lilac-white
-    printf '\033]PFbbbbbb'   # F  br white  near-white pink
+    printf '\033]P0000000'   # 0 
+    printf '\033]P8a433c4'   # 8 
+    printf '\033]P1874474'   # 1 
+    printf '\033]P9888888'   # 9 
+    printf '\033]P2999999'   # 2 
+    printf '\033]PAaaaaaa'   # A 
+    printf '\033]P39543aa'   # 3 // comments and ... 
+    printf '\033]PB999999'   # B 
+    printf '\033]P4aa3391'   # 4 
+    printf '\033]PCdd33bb'   # C 
+    printf '\033]P5664466'   # 5 // mini buffer and search
+    printf '\033]PD774477'   # D 
+    printf '\033]P6641686'   # 6 //
+    printf '\033]PE999999'   # E 
+    printf '\033]P7aaaaaa'   # 7 
+    printf '\033]PFbb99ba'   # F 
     printf '\033\014'         # repaint
     ;;
 esac
