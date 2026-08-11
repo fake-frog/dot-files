@@ -1,0 +1,185 @@
+# Sway config — Nano Emacs light theme
+# See https://swaywm.org/docs for reference
+
+set $mod Mod4
+
+# ── Display ──────────────────────────────────────────────────────────────────
+
+output * bg ~/Pictures/lush-forest.jpg fill
+#output * bg #181818 solid_color
+output * scale 1.3
+
+# ── Input ────────────────────────────────────────────────────────────────────
+input type:keyboard {
+    repeat_delay 175
+    repeat_rate 50
+    xkb_options altwin:swap_alt_win,caps:ctrl_modifier
+}
+
+# Mouse: replace "11" with your actual device identifier
+# Run: swaymsg -t get_inputs   to find it
+input "11" {
+   # accel_speed -0.5
+   # accel_profile adaptive
+}
+
+# ── Startup ──────────────────────────────────────────────────────────────────
+exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ 0%
+exec --no-startup-id nm-applet --indicator
+exec --no-startup-id dex --autostart --environment sway
+exec waybar
+
+exec swayidle -w \
+    timeout 300 'swaylock -c ffffff' \
+    before-sleep 'swaylock -c ffffff'
+
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+
+# ── Keybindings ──────────────────────────────────────────────────────────────
+bindsym $mod+l exec swaylock -c ffffff
+
+# Volume (waybar's pulseaudio module refreshes itself, no SIGUSR1 needed)
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute     exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Brightness
+bindsym XF86MonBrightnessUp   exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+
+# Terminal
+bindsym $mod+Return exec alacritty
+
+# Kill
+bindsym $mod+q kill
+
+# Launcher
+# bindsym $mod+d exec bemenu-run
+
+# Focus
+bindsym $mod+b focus left
+bindsym $mod+n focus down
+bindsym $mod+p focus up
+bindsym $mod+f focus right
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+# Move
+bindsym $mod+Shift+b move left
+bindsym $mod+Shift+n move down
+bindsym $mod+Shift+p move up
+bindsym $mod+Shift+f move right
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+# Split
+bindsym $mod+h split h
+bindsym $mod+v split v
+
+# Layout
+bindsym $mod+m fullscreen toggle
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Floating
+
+floating_modifier $mod normal
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# Parent
+bindsym $mod+a focus parent
+
+# Workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Sway management
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
+
+# Resize mode
+mode "resize" {
+    bindsym b resize shrink width 10 px or 10 ppt
+    bindsym p resize grow height 10 px or 10 ppt
+    bindsym n resize shrink height 10 px or 10 ppt
+    bindsym f resize grow width 10 px or 10 ppt
+    bindsym Left  resize shrink width 10 px or 10 ppt
+    bindsym Down  resize grow height 10 px or 10 ppt
+    bindsym Up    resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# ── Appearance ───────────────────────────────────────────────────────────────
+font lilex 10
+
+#gaps inner 10
+#gaps outer 5
+
+default_border pixel 1
+default_floating_border pixel 1
+
+
+set $bg-color            #111111
+set $inactive-bg-color   #000000
+set $text-color          #dababa
+set $inactive-text-color #696262
+set $urgent-bg-color     #f666aa
+set $indicator-color     #555555
+set $focused-border      #3a3a3a
+set $unfocused-border    #1c1c1c
+set $popout-color        #e35420
+
+client.focused          $focused-border     $bg-color          $text-color          $indicator-color   $focused-border
+client.focused_inactive $unfocused-border   $inactive-bg-color $inactive-text-color $unfocused-border  $unfocused-border
+client.unfocused        $unfocused-border   $inactive-bg-color $inactive-text-color $unfocused-border  $unfocused-border
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color   $urgent-bg-color
+client.placeholder      $bg-color           $bg-color          $text-color          $bg-color          $bg-color
+client.background       $bg-color
+
+bindsym $mod+d exec bemenu-run -c -w -W 0.5 D -H 24 --hp 10 -l 15 --nb '$unfocused-border' --nf '$text-color' --ab '$inactive-bg-color' --af '$text-color' --fb '$unfocused-border' --ff '$text-color' --tb '$popout-color' --tf '$text-color' --hb '$popout-color' --hf '$bg-color' --sb '$popout-color' --sf '$text-color'
+
+# ── Bar ──────────────────────────────────────────────────────────────────────
+# The bar itself is now handled by waybar (see `exec waybar` above and
+# ~/.config/waybar/config + style.css). No sway `bar {}` block needed.
